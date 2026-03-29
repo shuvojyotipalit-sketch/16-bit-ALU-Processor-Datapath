@@ -1,1 +1,53 @@
 
+`timescale 1ns / 1ps
+
+module processor_tb;
+
+reg clk;
+reg [2:0] opcode;
+reg [1:0] rs1;
+reg [1:0] rs2;
+reg [1:0] rd;
+
+processor_top uut (
+    .clk(clk),
+    .opcode(opcode),
+    .rs1(rs1),
+    .rs2(rs2),
+    .rd(rd)
+);
+
+initial begin
+    clk = 0;
+end
+
+always #5 clk = ~clk;
+
+initial begin
+
+    opcode = 3'b000;   // ADD
+    rs1 = 2'b00;
+    rs2 = 2'b01;
+    rd  = 2'b10;
+
+    #20;
+
+    opcode = 3'b001;   // SUB
+    rs1 = 2'b10;
+    rs2 = 2'b01;
+    rd  = 2'b11;
+
+    #20;
+
+    opcode = 3'b010;   // AND
+    rs1 = 2'b00;
+    rs2 = 2'b11;
+    rd  = 2'b01;
+
+    #20;
+
+    $stop;
+
+end
+
+endmodule
